@@ -2,14 +2,20 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import { ContactModel } from '../models/contact.model' ;
 import express, {Request, Response} from 'express';
+const bcrypt = require('bcrypt');
+
 
 const contactController = Router();
 
 // Create Contact
 contactController.post('/add', async (req, res) => {
     try {
-        const { userId, email, username, password, name, profilePhoto, createdAt, lastActive } = req.body;
+        const { userId, email, username, password, name, profilePhoto} = req.body;
+        if (!req.body.email || !req.body.username || !req.body.password) {
+            return res.status(400).json({ message: 'Missing required fields for the user!' });
+        }
 
+        const hashedPassword: string = await bcrypt.hashSync(req.body.password, 10);
         const contact = new ContactModel({
             userId,
             email,
@@ -17,8 +23,8 @@ contactController.post('/add', async (req, res) => {
             password,
             name,
             profilePhoto,
-            createdAt,
-            lastActive
+            createdAt: Date.now,
+            lastActive: Date.now
         });
 
         await contact.save();
