@@ -6,7 +6,7 @@ import express, {Request, Response} from 'express';
 const contactController = Router();
 
 // Create Contact
-export const createContact = async (req: Request, res: Response) => {
+contactController.post('/add', async (req, res) => {
     try {
         const { userId, email, username, password, name, profilePhoto, createdAt, lastActive } = req.body;
 
@@ -27,9 +27,9 @@ export const createContact = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }
-};
+});
 // Get Contacts
-contactController.get('getAllContacts', async (req, res) => {
+contactController.get('/getAll', async (req, res) => {
     try {
         const contacts = await ContactModel.find();
 
@@ -43,7 +43,7 @@ contactController.get('getAllContacts', async (req, res) => {
     }
 });
 
-contactController.get('getById/:id', async (req, res) => {
+contactController.get('/getById/:id', async (req, res) => {
     try {
         const contact = await ContactModel.findById(req.params.id);
 

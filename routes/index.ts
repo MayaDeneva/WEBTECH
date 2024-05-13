@@ -7,7 +7,7 @@ import channelController from './channelController';
 const router = Router();
 
 export const connect = (app: Application, path: string): void => {
-    router.use('/users', contactController);
+    router.use('/contacts', contactController);
     router.use('/messages', messageController);
     router.use('/channels', channelController);
 
