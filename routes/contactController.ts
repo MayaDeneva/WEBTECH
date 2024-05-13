@@ -20,7 +20,7 @@ contactController.post('/add', async (req, res) => {
             userId,
             email,
             username,
-            password,
+            password: hashedPassword,
             name,
             profilePhoto,
             createdAt: Date.now,
